@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Bundled fonts (Latin + numerals). Arabic falls through to the
+   system Arabic stack declared in --font-arabic. ─────────────────── */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* Night Desk — dark-first financial terminal. Raw OKLCH L C H. */
+    --background: 0.16 0.018 255;
+    --foreground: 0.94 0.008 255;
+
+    --card: 0.2 0.02 255;
+    --card-foreground: 0.94 0.008 255;
+
+    --popover: 0.21 0.021 255;
+    --popover-foreground: 0.94 0.008 255;
+
+    /* Amber-gold primary — unexpected for finance, high-contrast CTA */
+    --primary: 0.78 0.15 78;
+    --primary-foreground: 0.17 0.03 78;
+
+    --secondary: 0.24 0.02 255;
+    --secondary-foreground: 0.88 0.008 255;
+
+    --muted: 0.24 0.02 255;
+    --muted-foreground: 0.62 0.012 255;
+
+    /* Cyan-teal AI / intelligence accent */
+    --accent: 0.72 0.13 195;
+    --accent-foreground: 0.16 0.02 195;
+
+    --destructive: 0.62 0.2 22;
+    --destructive-foreground: 0.96 0.006 22;
+
+    --success: 0.7 0.17 150;
+    --success-foreground: 0.16 0.02 150;
+
+    --warning: 0.78 0.15 78;
+    --warning-foreground: 0.17 0.03 78;
+
+    --border: 0.28 0.02 255;
+    --input: 0.28 0.02 255;
+    --ring: 0.78 0.15 78;
+
+    /* Price movement semantics — up/down distinct from primary */
+    --up: 0.7 0.17 150;
+    --down: 0.62 0.2 22;
+
+    /* Chart series */
+    --chart-1: 0.7 0.17 150; /* up candles / bullish */
+    --chart-2: 0.62 0.2 22; /* down candles / bearish */
+    --chart-3: 0.78 0.15 78; /* SMA20 — amber */
+    --chart-4: 0.72 0.13 195; /* SMA50 — teal */
+    --chart-5: 0.68 0.14 300; /* MACD / secondary series */
+
+    /* Sidebar (navigation rail) */
+    --sidebar: 0.18 0.019 255;
+    --sidebar-foreground: 0.9 0.008 255;
+    --sidebar-primary: 0.78 0.15 78;
+    --sidebar-primary-foreground: 0.17 0.03 78;
+    --sidebar-accent: 0.24 0.02 255;
+    --sidebar-accent-foreground: 0.9 0.008 255;
+    --sidebar-border: 0.28 0.02 255;
+    --sidebar-ring: 0.78 0.15 78;
+
+    /* Typography */
+    --font-display: "Space Grotesk", "DM Sans", system-ui, sans-serif;
+    --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+    --font-arabic: "Noto Sans Arabic", "IBM Plex Sans Arabic", "Cairo",
+      "Segoe UI", Tahoma, sans-serif;
+
+    /* Shape & motion */
+    --radius: 0.625rem;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.8 0.15 78) 0%,
+      oklch(0.72 0.16 62) 100%
+    );
+    --gradient-surface: linear-gradient(
+      180deg,
+      oklch(0.22 0.021 255) 0%,
+      oklch(0.19 0.02 255) 100%
+    );
+  }
+
+  .dark {
+    /* Night Desk is dark-first; .dark mirrors :root so class toggling is safe. */
+    --background: 0.16 0.018 255;
+    --foreground: 0.94 0.008 255;
+    --card: 0.2 0.02 255;
+    --card-foreground: 0.94 0.008 255;
+    --popover: 0.21 0.021 255;
+    --popover-foreground: 0.94 0.008 255;
+    --primary: 0.78 0.15 78;
+    --primary-foreground: 0.17 0.03 78;
+    --secondary: 0.24 0.02 255;
+    --secondary-foreground: 0.88 0.008 255;
+    --muted: 0.24 0.02 255;
+    --muted-foreground: 0.62 0.012 255;
+    --accent: 0.72 0.13 195;
+    --accent-foreground: 0.16 0.02 195;
+    --destructive: 0.62 0.2 22;
+    --destructive-foreground: 0.96 0.006 22;
+    --success: 0.7 0.17 150;
+    --success-foreground: 0.16 0.02 150;
+    --warning: 0.78 0.15 78;
+    --warning-foreground: 0.17 0.03 78;
+    --border: 0.28 0.02 255;
+    --input: 0.28 0.02 255;
+    --ring: 0.78 0.15 78;
+    --up: 0.7 0.17 150;
+    --down: 0.62 0.2 22;
+    --chart-1: 0.7 0.17 150;
+    --chart-2: 0.62 0.2 22;
+    --chart-3: 0.78 0.15 78;
+    --chart-4: 0.72 0.13 195;
+    --chart-5: 0.68 0.14 300;
+    --sidebar: 0.18 0.019 255;
+    --sidebar-foreground: 0.9 0.008 255;
+    --sidebar-primary: 0.78 0.15 78;
+    --sidebar-primary-foreground: 0.17 0.03 78;
+    --sidebar-accent: 0.24 0.02 255;
+    --sidebar-accent-foreground: 0.9 0.008 255;
+    --sidebar-border: 0.28 0.02 255;
+    --sidebar-ring: 0.78 0.15 78;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background font-body text-foreground antialiased;
+    font-feature-settings: "tnum" 1, "cv01" 1;
+  }
+
+  /* Arabic copy uses the Arabic stack; Latin/numerals keep DM Sans. */
+  [dir="rtl"],
+  .font-arabic {
+    font-family: var(--font-arabic);
+  }
+
+  /* Tabular numerals for prices and indicator readouts. */
+  .tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-arabic {
+    font-family: var(--font-arabic);
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-surface {
+    background-image: var(--gradient-surface);
+  }
+
+  .text-up {
+    color: oklch(var(--up));
+  }
+
+  .text-down {
+    color: oklch(var(--down));
+  }
+
+  .bg-up\/10 {
+    background-color: oklch(var(--up) / 0.1);
+  }
+
+  .bg-down\/10 {
+    background-color: oklch(var(--down) / 0.1);
+  }
+
+  .shadow-subtle {
+    box-shadow: 0 1px 2px 0 oklch(0.1 0.01 255 / 0.4), 0 0 0 1px
+      oklch(0.28 0.02 255 / 0.5);
+  }
+
+  .shadow-elevated {
+    box-shadow: 0 4px 12px -2px oklch(0.08 0.01 255 / 0.5), 0 12px 32px -8px
+      oklch(0.08 0.01 255 / 0.4);
+  }
+
+  .shadow-glow-primary {
+    box-shadow: 0 0 0 1px oklch(var(--primary) / 0.4), 0 8px 24px -6px
+      oklch(var(--primary) / 0.25);
+  }
+}

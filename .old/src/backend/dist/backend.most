@@ -1,0 +1,208 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type AnalysisId__627167302 = Nat;
+type AnalysisRecord__1065951455 =
+  {
+    analysisText : Text;
+    assetName : Text;
+    assetType : AssetType__1018305865;
+    confidence : Nat;
+    createdAt : Timestamp__301639476;
+    id : AnalysisId__627167302;
+    interval : Interval__232282931;
+    priceAtAnalysis : Float;
+    recommendation : Recommendation__990080357;
+    symbol : Text
+  };
+type AnalysisRecord__278781538 =
+  {
+    analysisText : Text;
+    assetName : Text;
+    assetType : AssetType__226941775;
+    confidence : Nat;
+    createdAt : Nat;
+    id : Nat;
+    interval : Interval__409232447;
+    priceAtAnalysis : Float;
+    recommendation : Recommendation__222906553;
+    symbol : Text
+  };
+type AssetType__1018305865 = {#crypto; #forex; #gold; #stock};
+type AssetType__226941775 = {#crypto; #stock};
+type BookingRequest__244989189 =
+  {
+    contact : Text;
+    createdAt : Time__918999370;
+    handled : Bool;
+    id : Nat;
+    message : Text;
+    name : Text;
+    preferredTime : Text;
+    service : Text
+  };
+type BookingRequest__799309363 =
+  {
+    contact : Text;
+    createdAt : Int;
+    handled : Bool;
+    id : Nat;
+    message : Text;
+    name : Text;
+    preferredTime : Text;
+    service : Text
+  };
+type BusinessInfo__19265377 =
+  {
+    address : Text;
+    email : Text;
+    name : Text;
+    openingHours : [DayHours__515828172];
+    phone : Text;
+    tagline : Text
+  };
+type BusinessInfo__218565759 =
+  {
+    address : Text;
+    email : Text;
+    name : Text;
+    openingHours : [DayHours__465508174];
+    phone : Text;
+    tagline : Text
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type DayHours__465508174 = {days : Text; hours : Text};
+type DayHours__515828172 = {days : Text; hours : Text};
+type GalleryImage__1026458138 = {caption : Text; id : Nat; url : Text};
+type GalleryImage__596546865 = {caption : Text; id : Nat; url : Text};
+type Int__616954475 = Int;
+type Int__789852381 = Int__616954475;
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Interval__232282931 = {#daily; #monthly; #weekly};
+type Interval__409232447 = {#daily; #monthly; #weekly};
+type Interval__844791276 = {#daily; #monthly; #weekly};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__9515972 =
+  {
+    accessControlState : AccessControlState__201339279;
+    analyses : Map__230067015<Nat, AnalysisRecord__278781538>;
+    owners : Map__230067015<Nat, Principal>;
+    state : {var nextAnalysisId : Nat}
+  };
+type NewActor__961910584 =
+  {
+    accessControlState : AccessControlState__201339279;
+    analyses : Map__230067015<Nat, NewAnalysisRecord__187123592>;
+    owners : Map__230067015<Nat, Principal>;
+    state : {var nextAnalysisId : Nat}
+  };
+type NewAnalysisRecord__187123592 =
+  {
+    analysisText : Text;
+    assetName : Text;
+    assetType : NewAssetType__52917221;
+    confidence : Nat;
+    createdAt : Nat;
+    id : Nat;
+    interval : Interval__844791276;
+    priceAtAnalysis : Float;
+    recommendation : Recommendation__650038951;
+    symbol : Text
+  };
+type NewAssetType__52917221 = {#crypto; #forex; #gold; #stock};
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__545456715 =
+  {
+    accessControlState : AccessControlState__201339279;
+    analyses : Map__230067015<Nat, OldAnalysisRecord__1021266541>;
+    owners : Map__230067015<Nat, Principal>;
+    state : {var nextAnalysisId : Nat}
+  };
+type OldActor__828966767 =
+  {
+    accessControlState : AccessControlState__201339279;
+    bookingRequests : Map__230067015<Nat, BookingRequest__799309363>;
+    businessInfo : BusinessInfo__19265377;
+    gallery : [GalleryImage__1026458138];
+    var nextRequestId : Nat;
+    services : [Service__695012057];
+    team : [TeamMember__575034970];
+    testimonials : [Testimonial__1061937206]
+  };
+type OldAnalysisRecord__1021266541 =
+  {
+    analysisText : Text;
+    assetName : Text;
+    assetType : OldAssetType__762495181;
+    confidence : Nat;
+    createdAt : Nat;
+    id : Nat;
+    interval : Interval__844791276;
+    priceAtAnalysis : Float;
+    recommendation : Recommendation__650038951;
+    symbol : Text
+  };
+type OldAssetType__762495181 = {#crypto; #stock};
+type Recommendation__222906553 = {#buy; #sell; #wait};
+type Recommendation__650038951 = {#buy; #sell; #wait};
+type Recommendation__990080357 = {#buy; #sell; #wait};
+type Service__1054196247 =
+  {description : Text; duration : Text; id : Nat; name : Text; price : Text};
+type Service__695012057 =
+  {description : Text; duration : Text; id : Nat; name : Text; price : Text};
+type TeamMember__355003584 =
+  {bio : Text; id : Nat; name : Text; photo : Text; role : Text};
+type TeamMember__575034970 =
+  {bio : Text; id : Nat; name : Text; photo : Text; role : Text};
+type Testimonial__1061937206 = {author : Text; id : Nat; quote : Text};
+type Testimonial__180620276 = {author : Text; id : Nat; quote : Text};
+type Time__418528263 = Int__789852381;
+type Time__918999370 = Time__418528263;
+type Timestamp__301639476 = Nat;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20250101_000000_Init" :
+    {} ->
+      {
+        accessControlState : AccessControlState__201339279;
+        bookingRequests : Map__230067015<Nat, BookingRequest__244989189>;
+        businessInfo : BusinessInfo__218565759;
+        gallery : [GalleryImage__596546865];
+        var nextRequestId : Nat;
+        services : [Service__1054196247];
+        team : [TeamMember__355003584];
+        testimonials : [Testimonial__180620276]
+      };
+  "20260101_000000" : (old : OldActor__828966767) -> NewActor__9515972;
+  "20260201_000000" : (old : OldActor__545456715) -> NewActor__961910584
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable analyses :
+    {
+      var root :
+        Node__204828119<AnalysisId__627167302, AnalysisRecord__1065951455>;
+      var size : Nat__227979830
+    };
+  stable owners :
+    {
+      var root : Node__204828119<AnalysisId__627167302, Principal>;
+      var size : Nat__227979830
+    };
+  stable state : {var nextAnalysisId : Nat}
+};

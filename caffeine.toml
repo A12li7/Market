@@ -1,0 +1,11 @@
+manifest_version = "0.1.0"
+
+[project]
+id = "maplemain"
+name = "MapleMain"
+
+[workspace]
+include = ["src/**"]
+
+[canisters.frontend]
+depends_on = ["backend"]

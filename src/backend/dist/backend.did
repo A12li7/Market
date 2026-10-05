@@ -1,0 +1,269 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec HttpHeader;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: HttpRequestResult;
+ };
+type Timestamp = nat;
+type Result__1 = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Result_6 = 
+ variant {
+   err: Error__1;
+   ok;
+ };
+type Result_5 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result_4 = 
+ variant {
+   err: Error;
+   ok: AnalysisResult;
+ };
+type Result_3 = 
+ variant {
+   err: Error;
+   ok: vec Candle;
+ };
+type Result_2 = 
+ variant {
+   err: Error;
+   ok: vec ExchangeHours;
+ };
+type Result_1 = 
+ variant {
+   err: Error;
+   ok: IndicatorSet;
+ };
+type Result = 
+ variant {
+   err: Error;
+   ok: vec NewsItem;
+ };
+type Recommendation = 
+ variant {
+   buy;
+   sell;
+   wait;
+ };
+type NewsItem = 
+ record {
+   publishedAt: Timestamp;
+   source: text;
+   summary: opt text;
+   title: text;
+   url: text;
+ };
+type MacdCrossover = 
+ variant {
+   bearish;
+   bullish;
+   none;
+ };
+type Interval = 
+ variant {
+   daily;
+   monthly;
+   weekly;
+ };
+type IndicatorSet = 
+ record {
+   macd: opt float64;
+   macdCrossover: opt MacdCrossover;
+   macdHistogram: opt float64;
+   macdSignal: opt float64;
+   rsi14: opt float64;
+   sma20: opt float64;
+   sma50: opt float64;
+ };
+type HttpRequestResult = 
+ record {
+   body: blob;
+   headers: vec HttpHeader;
+   status: nat;
+ };
+type HttpHeader = 
+ record {
+   name: text;
+   value: text;
+ };
+type ExchangeStatus = 
+ variant {
+   afterHours;
+   closed;
+   holiday;
+   open;
+   preMarket;
+   sessionBreak;
+ };
+type ExchangeHours = 
+ record {
+   code: text;
+   countdownSeconds: nat;
+   country: text;
+   localTime: text;
+   name: text;
+   nextEvent: ExchangeEvent;
+   nextEventLabel: text;
+   sessionClose: text;
+   sessionOpen: text;
+   status: ExchangeStatus;
+ };
+type ExchangeEvent = 
+ variant {
+   close;
+   open;
+ };
+type Error__1 = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Error = 
+ variant {
+   invalidInput: text;
+   notFound: text;
+   unauthorized: text;
+   upstream: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type Candle = 
+ record {
+   close: float64;
+   high: float64;
+   low: float64;
+   open: float64;
+   timestamp: Timestamp;
+   volume: float64;
+ };
+type AssetType = 
+ variant {
+   crypto;
+   forex;
+   gold;
+   stock;
+ };
+type AssetSuggestion = 
+ record {
+   assetType: AssetType;
+   name: text;
+   symbol: text;
+ };
+type AnalysisResult = 
+ record {
+   candles: vec Candle;
+   indicators: IndicatorSet;
+   "record": AnalysisRecord;
+ };
+type AnalysisRequest = 
+ record {
+   assetType: AssetType;
+   interval: Interval;
+   symbol: text;
+ };
+type AnalysisRecord = 
+ record {
+   analysisText: text;
+   assetName: text;
+   assetType: AssetType;
+   confidence: nat;
+   createdAt: Timestamp;
+   id: AnalysisId;
+   interval: Interval;
+   priceAtAnalysis: float64;
+   recommendation: Recommendation;
+   symbol: text;
+ };
+type AnalysisId = nat;
+service : {
+  __accessControlState: () -> (reserved) query;
+  __analyses: () -> (reserved) query;
+  __owners: () -> (reserved) query;
+  __state: () -> (reserved) query;
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result_6);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Delete one saved analysis by id (owner only).
+  deleteAnalysis: (id: AnalysisId) -> (Result_5);
+  execute: (qJson: text) -> (Result__1) query;
+  /// Fetch price history, compute indicators, generate an Arabic AI analysis,
+  /// persist it, and return the full result.
+  generateAnalysis: (request: AnalysisRequest) -> (Result_4);
+  /// Fetch one saved analysis by id (owner only).
+  getAnalysis: (id: AnalysisId) -> (opt AnalysisRecord) query;
+  /// Static Markdown documentation of the backend's public API.
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Fetch OHLC candles for an asset and interval.
+  getCandles: (symbol: text, assetType: AssetType, interval: Interval) ->
+   (Result_3);
+  /// Fetch the world's major exchanges with their current trading status and
+  /// the next scheduled open/close event. Read-only: performs an HTTP outcall
+  /// to a public exchange-hours source.
+  getExchangeHours: () -> (Result_2);
+  /// Compute technical indicators for an asset and interval.
+  getIndicators: (symbol: text, assetType: AssetType, interval: Interval) ->
+   (Result_1);
+  /// Fetch the latest financial news, optionally filtered by a keyword and
+  /// capped at `limit` items. Read-only: performs an HTTP outcall to a public
+  /// news source.
+  getMarketNews: (keyword: opt text, limit: nat) -> (Result);
+  isCallerAdmin: () -> (bool) query;
+  /// List the caller's saved analyses, newest first.
+  listAnalyses: () -> (vec AnalysisRecord) query;
+  schema: () -> (text) query;
+  /// Search stocks, cryptocurrencies, forex pairs and precious metals by name
+  /// or symbol. This is an update call because it performs HTTP outcalls to
+  /// the upstream sources.
+  searchAssets: (term: text) -> (vec AssetSuggestion);
+  /// HTTP outcall transform. Strips response headers so the response is
+  /// deterministic across replicas.
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+}
